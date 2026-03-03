@@ -1,13 +1,13 @@
-# 🎙️ KokoClone
+# KokoClone
 
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-blue)](https://huggingface.co/spaces/PatnaikAshish/kokoclone)
 [![Hugging Face Models](https://img.shields.io/badge/🤗%20Models-Repository-orange)](https://huggingface.co/PatnaikAshish/kokoclone)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python\&logoColor=white)]
 [![License](https://img.shields.io/badge/License-Apache_2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
----
 
-## 🧠 What is KokoClone?
+
+##  What is KokoClone?
 
 **KokoClone** is a fast, real-time compatible multilingual voice cloning system built on top of **Kokoro-ONNX**, one of the fastest open-source neural TTS engines available today.
 
@@ -21,22 +21,22 @@ It allows you to:
 Just text → voice → cloned output.
 
 
-## ⚡ Why Kokoro?
+##  Why Kokoro?
 
 KokoClone is powered by **Kokoro-ONNX**, a highly optimized neural TTS engine designed for:
 
-* ⚡ Extremely fast inference
-* 🎧 Natural prosody and expressive speech
-* 🧩 Lightweight ONNX runtime compatibility
-* 🖥️ Real-time deployment on CPU
-* 🚀 Even faster performance with GPU
+*  Extremely fast inference
+*  Natural prosody and expressive speech
+*  Lightweight ONNX runtime compatibility
+*  Real-time deployment on CPU
+*  Even faster performance with GPU
 
 Unlike many heavy TTS systems, Kokoro is lightweight and responsive — making KokoClone suitable for real-time applications, voice assistants, demos, and interactive tools.
 
 
-## ✨ Features
+##  Features
 
-### 🌍 Multilingual Speech Generation
+###  Multilingual Speech Generation
 
 Generate native speech in:
 
@@ -49,28 +49,32 @@ Generate native speech in:
 * Portuguese (`pt`)
 * Spanish (`es`)
 
-### 🎯 Zero-Shot Voice Cloning
+
+###  Zero-Shot Voice Cloning
 
 Upload a short voice sample and KokoClone transfers its vocal characteristics to the generated speech.
 
-### ⚡ Real-Time Friendly
+
+###  Real-Time Friendly
 
 Built on Kokoro’s efficient ONNX runtime pipeline, KokoClone runs smoothly on:
 
 * Standard laptops (CPU)
 * Workstations (GPU)
 
-### 📦 Automatic Model Handling
+
+###  Automatic Model Handling
 
 On first run, required model files are downloaded automatically and placed in the correct directories.
 
-### 🎨 Built-in Web Interface
+
+###  Built-in Web Interface
 
 Includes a clean and responsive Gradio UI for quick testing and demos.
 
 
 
-## 🚀 Live Demo
+##  Live Demo
 
 Try it instantly without installing anything:
 
@@ -78,18 +82,18 @@ Try it instantly without installing anything:
 
 
 
-## 🛠 Installation
+##  Installation
 
 Recommended: Use `conda` for a clean environment.
 
-### 1️⃣ Clone the Repository
+###  Clone the Repository
 
 ```bash
 git clone https://github.com/Ashish-Patnaik/kokoclone.git
 cd kokoclone
 ```
 
-### 2️⃣ Create Environment
+###  Create Environment
 
 ```bash
 conda create -n kokoclone python=3.12.12 -y
@@ -98,16 +102,16 @@ conda activate kokoclone
 
 
 
-## 📦 Install Dependencies
+##  Install Dependencies
 
-### 🔹 CPU Installation (Recommended for most users)
+###  CPU Installation (Recommended for most users)
 
 ```bash
 pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 ```
 
-### 🔹 GPU Installation (NVIDIA users)
+###  GPU Installation (NVIDIA users)
 
 ```bash
 pip install -r requirements.txt
@@ -116,13 +120,13 @@ pip install kokoro-onnx[gpu]
 
 
 
-## 🎮 Usage
+##  Usage
 
 KokoClone can be used in three ways:
 
 
 
-### 1️⃣ Web Interface
+###  Web Interface
 
 Launch the Gradio app:
 
@@ -139,7 +143,7 @@ Then open the browser interface to:
 
 
 
-### 2️⃣ Command Line
+###  Command Line
 
 ```bash
 python cli.py --text "Hello from KokoClone" --lang en --ref reference.wav --out output.wav
@@ -147,7 +151,7 @@ python cli.py --text "Hello from KokoClone" --lang en --ref reference.wav --out 
 
 
 
-### 3️⃣ Python API
+###  Python API
 
 ```python
 from core.cloner import KokoClone
@@ -164,7 +168,7 @@ cloner.generate(
 
 
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 app.py              → Gradio Web Interface
@@ -177,7 +181,7 @@ voice/              → Voice embeddings
 
 
 
-## 🎯 Use Cases
+##  Use Cases
 
 * Voice assistant prototypes
 * Real-time TTS demos
@@ -188,7 +192,7 @@ voice/              → Voice embeddings
 
 
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 This project builds upon:
 
@@ -196,6 +200,6 @@ This project builds upon:
 * **Kanade Tokenizer** — for voice conversion architecture
 
 
-## 📄 License
+##  License
 
 Licensed under the Apache 2.0 License.
