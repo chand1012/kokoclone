@@ -1,4 +1,5 @@
-<img width="1024" height="434" alt="image" src="https://github.com/user-attachments/assets/ec1a2079-c2c2-4132-8c02-8b05914ee7c2" />
+<img width="1050" height="450" alt="image" src="https://github.com/user-attachments/assets/26fbb00c-220e-435a-8f54-431781449c76" />
+
 
 <h1 align="center">KokoClone</h1>
 
