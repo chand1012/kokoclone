@@ -103,6 +103,45 @@ source .venv/bin/activate  # Linux/macOS
 
 
 
+## Docker
+
+Run KokoClone in a container using the official `uv` image (CPU). No local Python setup required.
+
+### Build
+
+```bash
+docker build -t kokoclone .
+```
+
+### Run
+
+```bash
+docker run -p 7860:7860 \
+  -v $(pwd)/model:/app/model \
+  -v $(pwd)/voice:/app/voice \
+  -v $(pwd)/.cache/torch:/app/.cache/torch \
+  -v $(pwd)/.cache/huggingface:/app/.cache/huggingface \
+  kokoclone
+```
+
+Then open **http://localhost:7860** in your browser.
+
+#### Volume mounts (recommended)
+
+The app downloads model weights from multiple sources on first startup. Mounting them as host volumes caches everything between container restarts:
+
+| Mount | What's cached |
+| --- | --- |
+| `-v $(pwd)/model:/app/model` | Kokoro ONNX model weights (~300 MB) |
+| `-v $(pwd)/voice:/app/voice` | Kokoro voice binary packs (~100 MB) |
+| `-v $(pwd)/.cache/torch:/app/.cache/torch` | WavLM/torchaudio hub checkpoints (vocoder) |
+| `-v $(pwd)/.cache/huggingface:/app/.cache/huggingface` | Kanade model weights from Hugging Face |
+
+Without volume mounts all models are re-downloaded every time the container starts.
+
+> **GPU note:** The image targets CPU. For NVIDIA GPU support, use an `nvidia/cuda` base image and copy the `uv` binary from `ghcr.io/astral-sh/uv` on top of it, then follow the same steps above.
+
+
 ##  Usage
 
 KokoClone is highly flexible and can be used via Web UI, CLI, or Python API.
