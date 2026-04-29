@@ -12,12 +12,19 @@ dependencies = [
     "misaki[en,ja,zh]>=0.9.4",
     "ninja>=1.13.0",
     "soundfile>=0.13.1",
-    "torch>=2.10.0",
-    "torchaudio>=2.10.0",
+    "torch>=2.6,<2.7",
+    "torchaudio>=2.6,<2.7",
 ]
 
 [tool.uv.sources]
 kanade-tokenizer = { git = "https://github.com/frothywater/kanade-tokenizer" }
+torch = { index = "pytorch-cu12" }
+torchaudio = { index = "pytorch-cu12" }
+
+[[tool.uv.index]]
+name = "pytorch-cu12"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
 
 [tool.uv]
 no-build-isolation-package = ["flash-attn"]

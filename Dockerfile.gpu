@@ -1,0 +1,48 @@
+FROM nvidia/cuda:12.8.1-runtime-ubuntu24.04
+
+WORKDIR /app
+
+# Redirect model caches to /app so they can be persisted via volume mounts
+ENV TORCH_HOME=/app/.cache/torch
+ENV HF_HOME=/app/.cache/huggingface
+
+# Install system dependencies:
+#   curl        — required to fetch the uv binary
+#   git         — required to fetch the kanade-tokenizer git dependency
+#   espeak-ng   — required by misaki's EspeakG2P for phoneme conversion
+#   libsndfile1 — required by the soundfile Python package
+#   build-essential — gcc, g++, make for building C/Cython extensions
+#   cmake         — required by pyopenjtalk build
+#   python3-dev   — required headers for building Python C extensions
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    git \
+    build-essential \
+    cmake \
+    python3-dev \
+    espeak-ng \
+    libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv — the fast Python package manager
+COPY --from=ghcr.io/astral-sh/uv:0.7.17 /uv /usr/local/bin/uv
+
+# Copy dependency manifests first for better layer caching
+COPY pyproject.toml uv.lock ./
+
+# Install Python dependencies using the lockfile for reproducible builds.
+# kokoro-onnx[gpu] in pyproject.toml pulls in onnxruntime-gpu for CUDA acceleration.
+RUN uv sync --frozen --no-dev
+
+# Copy application source
+COPY app.py inference.py cli.py ./
+COPY core/ ./core/
+
+# model/ and voice/ are intentionally excluded — they are downloaded at
+# runtime from HuggingFace. Mount host directories to persist them:
+#   -v $(pwd)/model:/app/model
+#   -v $(pwd)/voice:/app/voice
+
+EXPOSE 7860
+
+CMD ["uv", "run", "python", "app.py"]
