@@ -1,0 +1,22 @@
+build:
+  python_version: "3.12"
+  gpu: true
+  system_packages:
+    - "git"
+    - "espeak-ng"
+    - "libsndfile1"
+    - "cmake"
+    - "build-essential"
+  python_requirements: requirements-cog.txt
+  run:
+    # pyopenjtalk needs Cython (to generate openjtalk.cpp) and cmake<4.0
+    # (pip's bundled cmake 4.3 has a GCC 11.4 version string bug).
+    # Pre-installing these globally + --no-build-isolation bypasses pip's
+    # isolated build env and uses the correct versions.
+    - pip install "cmake<4.0" Cython setuptools wheel
+    - pip install --no-build-isolation pyopenjtalk
+    - pip install "misaki[ja,zh]"
+
+predict: "predict.py:Predictor"
+
+image: "r8.im/chand1012/kokoclone"

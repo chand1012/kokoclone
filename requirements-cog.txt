@@ -1,0 +1,13 @@
+# Core Audio & AI
+torch==2.5.1
+torchaudio==2.5.1
+soundfile
+huggingface_hub
+ninja
+
+# Text-to-Speech (Kokoro with GPU/ONNX acceleration)
+kokoro-onnx[gpu]
+misaki[en]
+
+# Voice Conversion (Kanade)
+git+https://github.com/frothywater/kanade-tokenizer

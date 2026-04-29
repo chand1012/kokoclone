@@ -103,6 +103,97 @@ source .venv/bin/activate  # Linux/macOS
 
 
 
+## Replicate
+
+Deploy KokoClone as a serverless API on [Replicate](https://replicate.com) using [Cog](https://github.com/replicate/cog).
+
+### Prerequisites
+
+1. [Install Docker](https://docs.docker.com/get-docker/) and make sure it is running.
+2. Install Cog:
+   ```bash
+   sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/latest/download/cog_$(uname -s)_$(uname -m)
+   sudo chmod +x /usr/local/bin/cog
+   ```
+3. [Create a Replicate account](https://replicate.com/signin) and [create a model page](https://replicate.com/create).
+4. Authenticate:
+   ```bash
+   cog login
+   ```
+
+### Update `cog.yaml`
+
+Replace `<your-username>` in `cog.yaml` with your Replicate username:
+
+```yaml
+image: "r8.im/your-username/kokoclone"
+```
+
+### Test Locally
+
+**TTS + voice clone:**
+```bash
+cog predict \
+  -i mode=tts \
+  -i text="Hello from KokoClone on Replicate!" \
+  -i lang=en \
+  -i reference_audio=@reference.wav
+```
+
+**Audio-to-audio voice conversion:**
+```bash
+cog predict \
+  -i mode=convert \
+  -i source_audio=@source_speech.wav \
+  -i reference_audio=@target_voice.wav
+```
+
+### Push to Replicate
+
+```bash
+cog push r8.im/your-username/kokoclone
+```
+
+Once pushed, your model has an interactive GUI and HTTP API at `https://replicate.com/your-username/kokoclone`.
+
+### Run via Python API
+
+```bash
+pip install replicate
+export REPLICATE_API_TOKEN=<your-token>
+```
+
+```python
+import replicate
+
+# TTS + voice clone
+output = replicate.run(
+    "your-username/kokoclone",
+    input={
+        "mode": "tts",
+        "text": "Hello from KokoClone!",
+        "lang": "en",
+        "reference_audio": open("reference.wav", "rb"),
+    }
+)
+
+# Audio-to-audio voice conversion
+output = replicate.run(
+    "your-username/kokoclone",
+    input={
+        "mode": "convert",
+        "source_audio": open("source_speech.wav", "rb"),
+        "reference_audio": open("target_voice.wav", "rb"),
+    }
+)
+
+# Save the output WAV
+with open("output.wav", "wb") as f:
+    f.write(output.read())
+```
+
+---
+
 ## Docker
 
 Run KokoClone in a container using the official `uv` image (CPU). No local Python setup required.
